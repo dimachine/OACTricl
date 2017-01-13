@@ -1,7 +1,7 @@
 import MySQLdb, time, random
 from pickle import *
 
-#вычисление плотности
+#density calculation
 def TDensity(Gi,Mi,Wi,I):
     nominator=0.0
     denominator=0.0
@@ -19,7 +19,7 @@ def TDensity(Gi,Mi,Wi,I):
     #print len(I)
     return nominator/denominator
 
-#вычисление плотности с размерами трикластера
+#calculation of the density and size of a tricluster
 def TSizeDensity(Gi,Mi,Wi,I):
     nominator=0.0
     denominator=0.0
@@ -56,7 +56,7 @@ def TProbDensity(gmb,S,I):
     return nominator/denominator
 
 
-#сохранение
+#saving
 def TSave(Triclusters, filename):
     f=file(filename,'w')
     f.write(str(len(Triclusters))+'\n')
@@ -69,7 +69,7 @@ def TSave(Triclusters, filename):
     
 
 def MySQLConn(num_rows):
-    # цепляемся
+    # connection
     conn = MySQLdb.connect(host="localhost",
 		       user = "root",
 		       passwd = "test",
@@ -100,7 +100,7 @@ def DataPowerContext():
     return rows
 
 def FirstPrimes(rows): 
-#первые штрихи -- словари
+#first primes
     g_prime={}
     m_prime={}
     w_prime={}
@@ -108,7 +108,7 @@ def FirstPrimes(rows):
     m_cnt={}
     w_cnt={}
     I={}
-#вычиляем первые штрихи для g не как пары (m,w), а как словари M_g и M_w
+#РІС‹С‡РёcР»СЏРµРј РїРµСЂРІС‹Рµ С€С‚СЂРёС…Рё РґР»СЏ g РЅРµ РєР°Рє РїР°СЂС‹ (m,w), Р° РєР°Рє СЃР»РѕРІР°СЂРё M_g Рё M_w
     for [g,m,w] in rows:
         if g not in g_prime:
             g_prime[g]=({},{})
@@ -131,11 +131,11 @@ def FirstPrimes(rows):
             w_prime[w][0][g]=1
         if m not in w_prime[w][1]:
             w_prime[w][1][m]=1
-        # считаем количество пар     
+       # СЃС‡РёС‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЂ    
         g_cnt[g]=g_cnt[g]+1
         m_cnt[m]=m_cnt[m]+1
         w_cnt[w]=w_cnt[w]+1
-    #формируем словарь c ключами 'gimiwi'
+    #С„РѕСЂРјРёСЂСѓРµРј СЃР»РѕРІР°СЂСЊ c РєР»СЋС‡Р°РјРё 'gimiwi'
         I[str(g)+str(m)+str(w)]=(g,m,w)
           
        # print g, g_prime
@@ -151,7 +151,7 @@ def FirstPrimes(rows):
 
 
 def TriclMain(rows, g_prime, m_prime, w_prime, time_start):  
-#трикластеры хранятся в словаре   
+#С‚СЂРёРєР»Р°СЃС‚РµСЂС‹ С…СЂР°РЅСЏС‚СЃСЏ РІ СЃР»РѕРІР°СЂРµ 
     T={}
     cnt=0
     for [g,m,w] in rows:
@@ -209,7 +209,7 @@ def ExhaustiveDensityCalc(I,T, time_start):
     return T
 
 def ProbabDensityCalc(I,T,alpha, time_start):
-    # Выбираем случайные фрагменты трикластеров
+    # Р’С‹Р±РёСЂР°РµРј СЃР»СѓС‡Р°Р№РЅС‹Рµ С„СЂР°РіРјРµРЅС‚С‹ С‚СЂРёРєР»Р°СЃС‚РµСЂРѕРІ
     print "Random density calculation is started"
     print "time elapsed in sec:", time.clock()-time_start
 
